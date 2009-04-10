@@ -1,0 +1,10 @@
+::
+: django-bbcode: AUTHORS.txt
+::
+
+Mark Friedenbach
+  Email: mark_friedenbach@yahoo.com
+
+::
+: End of File
+::
