@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+##
+# django-bbcode: util.py
+##
 
 # Convert a string with BBCode markup into its corresponding HTML markup
 #
@@ -116,3 +122,7 @@ def bbcode_to_html(tags_alternative_definition = {}, escape_html=true, method=:d
 # Replace the string contents with the HTML-converted markup
 def bbcode_to_html!(tags_alternative_definition = {}, escape_html=true, method=:disable, *tags)
     self.replace(BBRuby.to_html(self, tags_alternative_definition, escape_html, method, tags))
+
+##
+# End of File
+##

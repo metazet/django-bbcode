@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+##
+# django-bbcode: tags.py
+##
+
 # built-in BBCode tabs that will be processed
 @@tags = {
     # tag name => [regex, replace, description, example, enable/disable symbol]
@@ -193,3 +200,7 @@
         '[email]wadus@wadus.com[/email]',
         :email]
   }
+
+##
+# End of File
+##
