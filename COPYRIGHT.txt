@@ -5,7 +5,7 @@
 If you have contributed to django-bbcode, you deserve to be on this list.
 Contact us (see: AUTHORS.txt) and we'll add you.
 
-django-bbcode is Copyright (C) 2009 by the following:
+django-bbcode is Copyright (C) 2008-2009 by the following:
 
 Fernando Blat
 Mark Friedenbach
