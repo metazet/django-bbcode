@@ -32,13 +32,13 @@ def to_html(text,
 
     The dictionary takes the following format:
 
-        "name": [regexp, replacement, description, example, enable_symbol]
+        'name': [regexp, replacement, description, example, enable_symbol]
 
     For example,
 
        custom_blockquote = {
            'Quote': [
-               "\[quote(:.*)?=(.*?)\](.*?)\[\/quote\1?\]",
+               r"\[quote(:.*)?=(.*?)\](.*?)\[\/quote\1?\]",
                '<div class="quote"><p><cite>\2</cite></p><blockquote>\3</blockquote></div>',
                'Quote with citation',
                '[quote=mike]please quote me[/quote]',
