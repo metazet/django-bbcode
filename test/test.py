@@ -5,19 +5,37 @@
 # django-bbcode: test.py
 ##
 
+import sys
+sys.path.insert(0,'..')
+
+from bbcode import util as bbcode
 import unittest
 
 class BBCodeTestCase(unittest.TestCase):
     def test_strong(self):
-        self.assertEquals('<strong>simple</strong>', '[b]simple[/b]'.bbcode_to_html)
-        self.assertEquals('<strong>simple</strong>', '[b:7a9ca2c5c3]simple[/b:7a9ca2c5c3]'.bbcode_to_html)
-        self.assertEquals("<strong>line 1<br />line 2</strong>", "[b:7a9ca2c5c3]line 1\nline 2[/b:7a9ca2c5c3]".bbcode_to_html)
-        self.assertEquals('<strong>1. text 1:</strong> text 2<br /><strong>2. text 3</strong>', "[b:post_uid0]1. text 1:[/b:post_uid0] text 2\n[b:post_uid0]2. text 3[/b:post_uid0]".bbcode_to_html)
+        self.assertEquals(
+            '<strong>simple</strong>',
+            bbcode.to_html('[b]simple[/b]'))
+        self.assertEquals(
+            '<strong>simple</strong>',
+            bbcode.to_html('[b:7a9ca2c5c3]simple[/b:7a9ca2c5c3]'))
+        self.assertEquals(
+            "<strong>line 1<br />line 2</strong>",
+            bbcode.to_html("[b:7a9ca2c5c3]line 1\nline 2[/b:7a9ca2c5c3]"))
+        self.assertEquals(
+            '<strong>1. text 1:</strong> text 2<br /><strong>2. text 3</strong>',
+            bbcode.to_html("[b:post_uid0]1. text 1:[/b:post_uid0] text 2\n[b:post_uid0]2. text 3[/b:post_uid0]"))
 
     def test_em(self):
-        self.assertEquals('<em>simple</em>', '[i]simple[/i]'.bbcode_to_html)
-        self.assertEquals('<em>simple</em>', '[i:7a9ca2c5c3]simple[/i:7a9ca2c5c3]'.bbcode_to_html)
-        self.assertEquals("<em>line 1<br />line 2</em>", "[i:7a9ca2c5c3]line 1\nline 2[/i:7a9ca2c5c3]".bbcode_to_html)
+        self.assertEquals(
+            '<em>simple</em>',
+            bbcode.to_html('[i]simple[/i]'))
+        self.assertEquals(
+            '<em>simple</em>',
+            bbcode.to_html('[i:7a9ca2c5c3]simple[/i:7a9ca2c5c3]'))
+        self.assertEquals(
+            "<em>line 1<br />line 2</em>",
+            bbcode.to_html("[i:7a9ca2c5c3]line 1\nline 2[/i:7a9ca2c5c3]"))
 
     def test_u(self):
         self.assertEquals('<u>simple</u>', '[u]simple[/u]'.bbcode_to_html)
@@ -35,9 +53,15 @@ class BBCodeTestCase(unittest.TestCase):
         self.assertEquals('<ins>simple</ins>', '[ins:7a9ca2c5c3]simple[/ins:7a9ca2c5c3]'.bbcode_to_html)
 
     def test_code(self):
-        self.assertEquals('<code>simple</code>', '[code]simple[/code]'.bbcode_to_html)
-        self.assertEquals('<code>simple</code>', '[code:7a9ca2c5c3]simple[/code:7a9ca2c5c3]'.bbcode_to_html)
-        self.assertEquals("<code>var bxi = 0;<br />//Holds current speed of scrolling menu</code>", "[code:1:91cbdd72b7]var bxi = 0;\n//Holds current speed of scrolling menu[/code:1:91cbdd72b7]".bbcode_to_html)
+        self.assertEquals(
+            '<code>simple</code>',
+            bbcode.to_html('[code]simple[/code]'))
+        self.assertEquals(
+            '<code>simple</code>',
+            bbcode.to_html('[code:7a9ca2c5c3]simple[/code:7a9ca2c5c3]'))
+        self.assertEquals(
+            "<code>var bxi = 0;<br />//Holds current speed of scrolling menu</code>",
+            bbcode.to_html("[code:1:91cbdd72b7]var bxi = 0;\n//Holds current speed of scrolling menu[/code:1:91cbdd72b7]"))
 
     def test_size(self):
         self.assertEquals('<span style="font-size: 32px;">12px Text</span>', '[size=32]12px Text[/size]'.bbcode_to_html)

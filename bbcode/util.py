@@ -5,9 +5,12 @@
 # django-bbcode: util.py
 ##
 
+import re
+import bbcode.settings
+
 def to_html(text,
             tags_alternative_definition={},
-            escape_html=true,
+            escape_html=True,
             method='disable',
             *tags):
     """
@@ -39,7 +42,7 @@ def to_html(text,
        custom_blockquote = {
            'Quote': [
                r"\[quote(:.*)?=(.*?)\](.*?)\[\/quote\1?\]",
-               '<div class="quote"><p><cite>\2</cite></p><blockquote>\3</blockquote></div>',
+               '<div class="quote"><p><cite>\\2</cite></p><blockquote>\\3</blockquote></div>',
                'Quote with citation',
                '[quote=mike]please quote me[/quote]',
                'quote' ],
@@ -56,41 +59,49 @@ def to_html(text,
         ##
         # Translate BBCode to HTML, enabling 'image', 'bold', and 'quote' tags
         # *only*.
-        bbcode.util.to_html(text, {}, true,
+        bbcode.util.to_html(text, {}, True,
                             'enable',  'image', 'bold',  'quote')
 
         ##
         # Translate BBCode to HTML, enabling all tags *except* 'image',
         # 'bold', and 'quote'.
-        bbcode.util.to_html(text, {}, true,
+        bbcode.util.to_html(text, {}, True,
                             'disable', 'image', 'video', 'color')
     """
-    text = text.clone
-      
     # escape < and > to remove any html
-    if escape_html
-      text.gsub!( '&', '&amp;' )
-      text.gsub!( '<', '&lt;' )
-      text.gsub!( '>', '&gt;' )
-    end
-      
-    tags_definition = @@tags.merge(tags_alternative_definition)
+    if escape_html:
+        text = text.replace('&', '&amp;')
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+
+    # merge in the alternate definitions, if any.  Unfortunately there is no
+    # Python 2.3 compatible efficient way to do this.
+    tags_definition = bbcode.settings.TAGS
+    for x in tags_alternative_definition:
+        tags_definition[x] = tags_alternative_definition[x]
 
     # parse bbcode tags
-    case method
-        when :enable
-            tags_definition.each_value { |t| text.gsub!(t[0], t[1]) if tags.include?(t[4]) }
-        when :disable
-            # this works nicely because the default is disable and the default set of tags is [] (so none disabled) :)
-            tags_definition.each_value { |t| text.gsub!(t[0], t[1]) unless tags.include?(t[4]) }
-    end
+    if method == 'enable':
+        for x in tags_definition:
+            t = tags_definition[x]
+            if t[4] in tags:
+                regex = re.compile(t[0], re.IGNORECASE|re.DOTALL)
+                text = regex.sub(t[1], text)
+    if method == 'disable':
+        # this works nicely because the default is disable and the default set
+        # of tags is [] (so none disabled) :)
+        for x in tags_definition:
+            t = tags_definition[x]
+            if t[4] not in tags:
+                regex = re.compile(t[0], re.IGNORECASE|re.DOTALL)
+                text = regex.sub(t[1], text)
 
     # parse spacing
-    text.gsub!( /\r\n?/, "\n" )
-    text.gsub!( /\n/, "<br />\n" )
+    text = re.sub(r"\r\n?", "\n", text)
+    text = re.sub(r"\n", "<br />", text)
 
     # return markup
-    text
+    return text
 
 ##
 # End of File
