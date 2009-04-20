@@ -205,7 +205,7 @@ class BBCodeTestCase(unittest.TestCase):
             bbcode.to_html("[URL=http://www.altctrlsupr.com/dmstk/kdd070803/00.html] ABRIR\nALBUM [/URL]"))
         self.assertEquals(
             '<a href="http://www.urimalet.com/cadaverex.mp3">aha</a>',
-            bbcode.to_html("[URL=http://www.urimalet.com/cadaverex.mp3]aha[/URL]".bbcode_to_html))
+            bbcode.to_html("[URL=http://www.urimalet.com/cadaverex.mp3]aha[/URL]"))
 
     def test_image(self):
         self.assertEquals(
@@ -242,25 +242,51 @@ class BBCodeTestCase(unittest.TestCase):
             bbcode.to_html('[gvideo]http://video.google.com/videoplay?docid=-2200109535941088987[/gvideo]'))
 
     def test_email(self):
-        self.assertEquals('<a href="mailto:wadus@wadus.com">wadus@wadus.com</a>', '[email]wadus@wadus.com[/email]'.bbcode_to_html)
+        self.assertEquals(
+            '<a href="mailto:wadus@wadus.com">wadus@wadus.com</a>',
+            bbcode.to_html('[email]wadus@wadus.com[/email]'))
 
     def test_html_escaping(self):
-        self.assertEquals("<strong>&lt;i&gt;foobar&lt;/i&gt;</strong>", '[b]<i>foobar</i>[/b]'.bbcode_to_html)
-        self.assertEquals("<strong><i>foobar</i></strong>", '[b]<i>foobar</i>[/b]'.bbcode_to_html({}, False))
-        self.assertEquals("1 is &lt; 2", '1 is < 2'.bbcode_to_html)
-        self.assertEquals("1 is < 2", '1 is < 2'.bbcode_to_html({}, False))
-        self.assertEquals("2 is &gt; 1", '2 is > 1'.bbcode_to_html)
-        self.assertEquals("2 is > 1", '2 is > 1'.bbcode_to_html({}, False))
+        self.assertEquals(
+            "<strong>&lt;i&gt;foobar&lt;/i&gt;</strong>",
+            bbcode.to_html('[b]<i>foobar</i>[/b]'))
+        self.assertEquals(
+            "<strong><i>foobar</i></strong>",
+            bbcode.to_html('[b]<i>foobar</i>[/b]', {}, False))
+        self.assertEquals(
+            "1 is &lt; 2",
+            bbcode.to_html('1 is < 2'))
+        self.assertEquals(
+            "1 is < 2",
+            bbcode.to_html('1 is < 2', {}, False))
+        self.assertEquals(
+            "2 is &gt; 1",
+            bbcode.to_html('2 is > 1'))
+        self.assertEquals(
+            "2 is > 1",
+            bbcode.to_html('2 is > 1', {}, False))
 
     def test_disable_tags(self):
-        self.assertEquals("[b]foobar[/b]", "[b]foobar[/b]".bbcode_to_html({}, true, 'disable', 'bold'))
-        self.assertEquals("[b]<em>foobar</em>[/b]", "[b][i]foobar[/i][/b]".bbcode_to_html({}, True, 'disable', 'bold'))
-        self.assertEquals("[b][i]foobar[/i][/b]", "[b][i]foobar[/i][/b]".bbcode_to_html({}, True, 'disable', 'bold', 'italics'))
+        self.assertEquals(
+            "[b]foobar[/b]",
+            bbcode.to_html("[b]foobar[/b]", {}, True, 'disable', 'bold'))
+        self.assertEquals(
+            "[b]<em>foobar</em>[/b]",
+            bbcode.to_html("[b][i]foobar[/i][/b]", {}, True, 'disable', 'bold'))
+        self.assertEquals(
+            "[b][i]foobar[/i][/b]",
+            bbcode.to_html("[b][i]foobar[/i][/b]", {}, True, 'disable', 'bold', 'italics'))
 
     def test_enable_tags(self):
-        self.assertEquals("<strong>foobar</strong>", "[b]foobar[/b]".bbcode_to_html({}, true, 'enable', 'bold'))
-        self.assertEquals("<strong>[i]foobar[/i]</strong>", "[b][i]foobar[/i][/b]".bbcode_to_html({}, True, 'enable', 'bold'))
-        self.assertEquals("<strong><em>foobar</em></strong>", "[b][i]foobar[/i][/b]".bbcode_to_html({}, True, 'enable', 'bold', 'italics'))
+        self.assertEquals(
+            "<strong>foobar</strong>",
+            bbcode.to_html("[b]foobar[/b]", {}, True, 'enable', 'bold'))
+        self.assertEquals(
+            "<strong>[i]foobar[/i]</strong>",
+            bbcode.to_html("[b][i]foobar[/i][/b]", {}, True, 'enable', 'bold'))
+        self.assertEquals(
+            "<strong><em>foobar</em></strong>",
+            bbcode.to_html("[b][i]foobar[/i][/b]", {}, True, 'enable', 'bold', 'italics'))
 
 #    def test_to_html_bang_method(self):
 #        foo = "[b]foobar[/b]"

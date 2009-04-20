@@ -170,13 +170,13 @@ TAGS = {
         '[img size=96x96]http://www.google.com/intl/en_ALL/images/logo.gif[/img]',
         'image'],
     'Image (Alternative)': [
-        r"\[img=([^\[\]].*?)\.(#{@@imageformats})\]",
+        r"\[img=([^\[\]].*?)\.(" + "|".join(PERMITTED_IMAGE_FORMATS) + r")\]",
         '<img src="\\1.\\2" alt="" />',
         'Display an image (alternative format)', 
         '[img=http://myimage.com/logo.gif]',
         'image'],
     'Image': [
-        r"\[img(:.+)?\]([^\[\]].*?)\.(#{@@imageformats})\[\/img\1?\]",
+        r"\[img(:.+)?\]([^\[\]].*?)\.(" + "|".join(PERMITTED_IMAGE_FORMATS) + r")\[\/img\1?\]",
         '<img src="\\2.\\3" alt="" />',
         'Display an image',
         'Check out this crazy cat: [img]http://catsweekly.com/crazycat.jpg[/img]',
