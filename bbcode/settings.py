@@ -128,7 +128,7 @@ TAGS = {
         r"\[dd\](.*?)\[\/dd\]",
         '<dd>\\1</dd>',
         'Definition definitions',
-        '[dd]my definition[/dd',
+        '[dd]my definition[/dd]',
         'definition'],
     'Quote': [
         r"\[quote(:.*)?=\"?(.*?)\"?\](.*?)\[\/quote\1?\]",
