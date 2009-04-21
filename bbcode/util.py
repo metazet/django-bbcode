@@ -68,7 +68,7 @@ def to_html(text,
         bbcode.util.to_html(text, {}, True,
                             'disable', 'image', 'video', 'color')
     """
-    # escape < and > to remove any html
+    # escape <, >, and & to remove any html
     if escape_html:
         text = text.replace('&', '&amp;')
         text = text.replace('<', '&lt;')
